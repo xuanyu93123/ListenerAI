@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LISTENER AI</title>
+    <link href="img/headlogo.png"  rel="icon">
+    <link rel="stylesheet" href="css/styles.css">
+    <!--google font英-->
+    <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!--Google font中-->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <button class="toggle-btn" onclick="toggleSidebar()">
+        <i id="menu-icon" class="fas fa-bars menu-icon"></i>
+    </button>
+    <!-- <div class="sidebar" id="sidebar">
+        <a href="#">新手指南</a>
+        <a href="#">摘要查詢</a>
+        <a href="#">帳戶管理</a>
+        <a href="#">我的背包</a>
+    </div> -->
+
+     <div class="page-title" style="font-family: 'IM Fell English', serif;">
+            <h2>LISTENER AI - Manager</h2>
+    </div>
+
+    <div class="conversation-wrapper">
+        <div class="regis-container">
+            <h4>登入</h4>
+            <form id="ManagerLoginForm" class="regis-form">
+                <input id="manager_id" name="manager_id" type="text" placeholder="帳號" required>
+                <input id="manager_password" name="manager_password" type="password" placeholder="密碼" required>
+                <button type="submit" class="custom-button" style="margin-top: 0;">登入</button>
+            </form>
+        </div>
+    </div>
+
+    <!--navbar的-->
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
+    
+    <script type="module" src="src/main.ts"></script>
+</body>
+</html>

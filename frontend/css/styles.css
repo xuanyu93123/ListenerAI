@@ -1,0 +1,881 @@
+body {
+    background-image: url('../img/bgimg.jpg');
+    background-size: cover;
+    margin: 0;
+    height: 100vh;
+    /* 確保全屏高度 */
+    background-attachment: fixed;
+    overflow-y: auto;
+}
+
+/*導覽列*/
+.sidebar {
+    height: 100vh;
+    width: 13%;
+    background-color: rgba(48, 20, 0, 0.9);
+    /*原本十六進制顏色的 RGB值，透明度90%*/
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 5%;
+    padding-left: 20px;
+
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    z-index: 999;
+    display: none;
+}
+
+.sidebar.active {
+    transform: translateX(0);
+}
+
+.sidebar a {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-family: 'Noto Serif TC', serif;
+    font-size: 16px;
+    padding: 15px;
+    transition: background-color 0.2s;
+}
+
+.sidebar a:hover {
+    text-decoration: underline;
+}
+
+.toggle-btn {
+    position: fixed;
+    /* 固定位置，不受 .sidebar 影響 */
+    top: 4%;
+    left: 25px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    /* 移除邊框 */
+    outline: none;
+    /* 移除外框 */
+    cursor: pointer;
+    z-index: 1000;
+    /* 確保位於導覽列之上 */
+}
+
+.menu-icon {
+    /*navbar三條線按鈕*/
+    font-size: 0.9rem;
+}
+
+/*--------每頁上方的title---------*/
+.page-title {
+    font-family: 'Noto Serif TC', serif;
+    color: #E6DA01;
+    font-size: 25px;
+    text-shadow:
+        0.8px 0.8px 0 black,
+        /* 右下 */
+        -0.8px 0.8px 0 black,
+        /* 左下 */
+        0.8px -0.8px 0 black,
+        /* 右上 */
+        -0.8px -0.8px 0 black;
+    /* 左上 */
+    display: flex;
+    flex-direction: column;
+    /* 讓內部元素垂直排列 */
+    align-items: center;
+    letter-spacing: 3px;
+}
+
+/*---------每頁咖啡色長方形button---------*/
+.custom-button {
+    width: auto;
+    height: 36px;
+    border-radius: 10px;
+    background-color: #602200;
+    border: none;
+    color: white;
+    /* 按鈕文字顏色 */
+    font-family: 'Noto Serif TC', serif;
+    font-size: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: flex;
+    justify-content: center;
+    /* 讓文字水平置中 */
+    align-items: center;
+    /* 讓文字垂直置中 */
+
+    cursor: pointer;
+}
+
+.custom-button:hover {
+    background-color: #603e35;
+}
+
+
+/*遮罩 */
+.overlay {
+    position: fixed;
+    /* 固定全螢幕 */
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* 半透明黑色遮罩 */
+    display: none;
+    /* 預設隱藏 */
+
+}
+
+
+/*-----------------註冊 登入、帳號管理的css (register)-----------------*/
+/*-----------------註冊 登入、帳號管理的css (register)-----------------*/
+.profile-popup {
+    position: absolute;
+    top: 110%;
+    /* 在頭貼的下方一點 */
+    left: 50%;
+    /* 先設定從中間開始 */
+    transform: translateX(-50%);
+    /* 往左移自己的一半，才真正置中 */
+
+    display: none;
+    /* 預設隱藏 */
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 7px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.profile-popup-img-group {
+    display: flex;
+    /* 預設隱藏 */
+    flex-direction: row;
+
+    padding: 4px 7px 7px 7px;
+    gap: 10px;
+}
+
+.profile-popup-img-group img {
+    width: 6vw;
+    height: 6vw;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.pic-option {
+    position: relative;
+    width: 6vw;
+    height: 6vw;
+    border-radius: 50%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.pic-option img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: 0.3s ease;
+}
+
+.choose-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 1vw;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.pic-option:hover img {
+    filter: brightness(0.5);
+    /* 變暗 */
+}
+
+.pic-option:hover .choose-text {
+    opacity: 1;
+}
+
+.profile-container {
+    position: relative;
+    width: 7vw;
+    height: 7vw;
+    overflow: visible;
+}
+
+.profile-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.edit-icon {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 1px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.edit-icon i {
+    font-size: 11px;
+    color: black;
+}
+
+.regis-container {
+    display: flex;
+    /* 啟用 Flexbox */
+    flex-direction: column;
+    /* 垂直排列子元素 */
+    justify-content: flex-start;
+    /* 垂直方向從頂部開始排列 */
+    align-items: center;
+    /* 水平方向居中對齊 */
+    background-color: #EDE9BA;
+    font-family: 'Noto Serif TC', serif;
+    width: 27%;
+    height: auto;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.regis-container p {
+    text-align: center;
+}
+
+.regis-form {
+    display: flex;
+    flex-direction: column;
+    /* 讓 input 和 button 垂直排列 */
+    align-items: center;
+    /* 讓內容水平置中 */
+    gap: 11px;
+    /* 讓每個輸入框之間保持間距 */
+    width: 100%;
+    font-size: 15px;
+    margin-bottom: 10px;
+}
+
+.regis-form input,
+.regis-form select {
+    width: 85%;
+    padding: 10px;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: block;
+    box-sizing: border-box;
+}
+
+.regis-form .half-input-container {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    gap: 10px;
+}
+
+.regis-form button {
+    width: 82%;
+    border-radius: 18px;
+}
+
+.regis-form a {
+    font-size: 13px;
+    color: #000000;
+    font-family: 'Noto Serif TC', serif;
+}
+
+.forgot-password {
+    font-size: 13px;
+    font-family: 'Noto Serif TC', serif;
+    
+    color: #000000;
+    align-self: flex-start;
+    margin-left: 10%;
+    margin-bottom: 13px;
+}
+
+.forgot-password,
+.regis-form a:hover {
+    color: #595959;
+    /* 滑鼠懸停時改變顏色 */
+}
+
+.user-manage-pw1 {
+    display: flex;
+    gap: 5px;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    margin-bottom: 4px;
+}
+
+.user-manage-pw {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin-bottom: 6px;
+}
+
+/*-------------end*/
+/*end------------------*/
+.result-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 6px;
+}
+
+.result-block {
+    margin-bottom: 9px;
+    width: 100%;
+}
+
+.result-label {
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+
+.progress-bar {
+  position: relative;
+  width: 80%;
+  height: 26px;
+  background-color: #ccc;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 15px;
+}
+
+.progress-fill {
+  position: absolute;
+  height: 100%;
+  background-color: #602200;
+  display: flex;
+  justify-content: center;  /* 水平置中 */
+  align-items: center;      /* 垂直置中 */
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  position: absolute;
+  color: white;
+  font-size: 12px;
+  pointer-events: none;
+  margin: 0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width: 100%;
+  height: 100%;
+}
+
+
+
+/*---------------------新手指南、相談、摘要 css-----------------*/
+/*---------------------新手指南、相談、摘要 css-----------------*/
+.guide-align {
+    /* 15%(marign-left)*/
+    display: flex;
+    align-items: center;
+    /* 水平方向居中對齊 */
+    font-family: 'Noto Serif TC', serif;
+    height: 80vh;
+    justify-content: space-between;
+    /* 讓區塊分散對齊，並確保兩邊有間距 */
+    padding: 0 15%;
+}
+
+.brown-left {
+    /* 15% + 5%(marign-right)*/
+    display: flex;
+    flex-direction: column;
+    /* 讓 p 垂直排列 */
+    align-items: center;
+    /* 讓 p 水平置中 */
+
+    background-color: rgba(96, 34, 0, 0.8);
+    /*原#602200，透明度80%*/
+    width: 24%;
+    height: auto;
+    /* 讓內容可以置中 */
+    border-radius: 5px;
+
+
+    max-height: 55vh;
+    /* 設定最大高度，這裡使用視口高度 (vh) 作為限制 */
+    overflow-y: auto;
+    cursor: pointer;
+}
+
+.brown-left::-webkit-scrollbar {
+    width: 5px;
+}
+
+.brown-left::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.823);
+    border-radius: 10px;
+}
+
+.brown-left::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.176);
+    border-radius: 10px;
+    margin: 40px;
+}
+
+.brown-left p {
+    color: #ffffff;
+    font-size: 16px;
+    gap: 15px;
+}
+
+.brown-left p:hover {
+    color: #c0c0c0;
+}
+
+.yellow-right {
+    background-color: #59595900;
+    /* 調成透明了*/
+    width: 75%;
+    max-height: 60%;
+    display: flex;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.map-bg-pic {
+    background-image: url("../img/map.png");
+    background-size: 100% 100%;
+    display: flex;
+    justify-content: center;
+    /* 內容水平置中 */
+    align-items: center;
+    width: 97vh;
+    height: 78vh;
+    padding-right: 7px;
+}
+
+.float {
+    animation: float 2.5s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.yellow-right p {
+    max-width: 82%;
+    margin: 0 auto;
+}
+
+.yellow-right::-webkit-scrollbar {
+    width: 4px;
+}
+
+.yellow-right::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.761);
+    border-radius: 10px;
+}
+
+.yellow-right::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    margin: 50px;
+}
+
+/*---------新手指南 右半邊css-------*/
+/*---------新手指南 右半邊css-------*/
+.yt-video-wrapper {
+    width: 60%;
+    aspect-ratio: 16 / 9;
+    margin: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.yt-video-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 5px solid #EDE9BA;
+    border-radius: 5px;
+}
+
+.yt-video-wrapper button {
+    margin-top: 2%;
+    position: absolute;
+    right: 0;
+}
+
+.guide {
+    display: flex;
+    flex-direction: column;
+    /* 垂直排列 */
+    align-items: center;
+    /* 每個項目水平置中 */
+    font-family: 'Noto Serif TC', serif;
+}
+
+.guide h3 {
+    margin: 2% 0 0 0;
+}
+
+.guide h4 {
+    display: inline-block;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.guide-navbar {
+    display: flex;
+    justify-content: center;
+    gap: 10%;
+    margin-bottom: 2%;
+    margin-top: 1%;
+    border-bottom: 1px solid white;
+    font-family: 'Noto Serif TC', serif;
+    width: 67%;
+}
+
+.guide-navbar p {
+    cursor: pointer;
+    font-size: 18px;
+    color: white;
+    transition: border 0.2s ease;
+    margin: 0;
+    text-shadow: 0.3px 0 0 currentColor;
+}
+
+.guide-navbar p:hover {
+    color: #cbcbcb;
+}
+
+/*      黃底大區塊    */
+.guide-section {
+    background-color: #EDE9BA;
+    width: 63%;
+    border-radius: 5px;
+    display: none;
+    padding: 0 2%;
+    overflow-y: auto;
+    margin-bottom: 3%;
+}
+
+.guide-section p {
+    font-size: 15px;
+}
+
+.guide-section.active {
+    display: block;
+    /* 只有 active 顯示 */
+}
+
+.guide-section::-webkit-scrollbar {
+    width: 4px;
+}
+
+.guide-section::-webkit-scrollbar-thumb {
+    background-color: rgba(152, 152, 152, 0.914);
+    border-radius: 10px;
+}
+
+.guide-section:-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.407);
+    border-radius: 10px;
+}
+
+/*  黃底大區  各項  */
+.guide-content {
+    display: flex;
+    margin-bottom: 5%;
+    align-items: center;
+}
+
+/*  黃底大區  左半邊的圖  */
+.guide-content img {
+    border-right: 1px solid rgb(0, 0, 0);
+    padding-right: 3%;
+    margin-right: 3%;
+    margin-top: 1%;
+}
+
+/*---------------------相談的css (conversation)-----------------*/
+/*---------------------相談的css (conversation)-----------------*/
+.conversation-wrapper {
+    display: flex;
+    flex-direction: column;
+    /* 讓內部元素（h2 和 .container）垂直排列 */
+    align-items: center;
+    /* 讓子元素水平居中 */
+    width: 100%;
+
+}
+
+.conversation-wrapper .container {
+    /*background-color: #EDE9BA;
+    border-radius: 10px;*/
+    width: 55.5%;
+    height: 60%;
+    position: relative;
+    /*內部的absolute子元素就會相對於 .container 定位*/
+}
+
+
+.conversation-jump {
+    width: 24%;
+    height: auto;
+    padding: 12px;
+    border-radius: 10px;
+    background-color: #EDE9BA;
+    /* background-color: #EDE9BA; */
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif TC', serif;
+    z-index: 20;
+    /* 高於遮罩 */
+}
+
+.conversation-jump h4 {
+    text-align: center;
+    margin: 0;
+}
+
+.conversation-jump .jump-wrapper {
+    display: flex;
+    /* 水平排列內容 */
+    gap: 10px;
+    /* 圖片與文字間距 */
+    align-items: center;
+    /* 垂直方向居中 */
+    flex-direction: column;
+
+}
+
+/*------------end-------------------*/
+
+
+/*---------------------選擇虛擬人的css (select-avatar)-----------------*/
+/*---------------------選擇虛擬人的css (select-avatar)-----------------*/
+.select-avtr {
+    display: flex;
+    flex-wrap: wrap;
+    /* 允許換行 */
+    justify-content: space-between;
+    /* 讓區塊分散對齊，並確保兩邊有間距 */
+    padding: 0 7%;
+}
+
+.select-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8vh;
+    width: 45%;
+    /* 比例新增% */
+    max-width: 450px;
+    /* 比例新增 */
+}
+
+.select-left h4 {
+    font-family: 'IM Fell English', serif;
+    color: #E6DA01;
+    text-shadow:
+        0.8px 0.8px 0 black,
+        /* 右下 */
+        -0.8px 0.8px 0 black,
+        /* 左下 */
+        0.8px -0.8px 0 black,
+        /* 右上 */
+        -0.8px -0.8px 0 black;
+    /* 左上 */
+    font-size: 30px;
+    align-items: center;
+    margin-bottom: 0em;
+    /* h4的預設是0.67em */
+    margin-top: 0;
+    margin-right: 10px;
+}
+
+.select-pop {
+    width: 17%;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #EDE9BA;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    font-family: 'Noto Serif TC', serif;
+    z-index: 1000;
+    text-align: center;
+}
+
+/*.avatar-video {
+    width: 100%;
+    height: auto;
+    border: 5px solid #EDE9BA;
+    border-radius: 5px;
+}*/
+.img_avatar {
+    border: 5px solid #EDE9BA;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease;
+    /* 平滑動畫 */
+}
+
+.avatar-link:hover .img_avatar {
+    transform: scale(1.05);
+    /* 放大 5% */
+    cursor: pointer;
+    /* 鼠標變成點擊 */
+}
+
+
+/*---------------------我的背包css (backpack)-----------------*/
+/*---------------------我的背包css (backpack)-----------------*/
+.img-wrapper {
+    position: relative;
+    display: inline-block;
+    /* 每張圖獨立一格 */
+    width: calc(33.333% - 2px);
+    box-sizing: border-box;
+}
+
+.img-wrapper img {
+    width: 100%;
+    height: 100%;
+    border: 1px solid #a39f7c;
+    display: block;
+    box-sizing: border-box;
+
+}
+
+.img-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.88);
+    /* 黑色半透明遮罩 */
+}
+
+.backpack-container {
+    display: flex;
+    flex-wrap: wrap;
+    /* 允許換行 */
+    justify-content: space-between;
+    /* 讓兩個並排，平均分配空間 */
+    align-self: flex-start;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.bp-left {
+    width: 45%;
+    border-radius: 10px;
+    background-color: #EDE9BA;
+    padding: 1.3%;
+    padding-bottom: 0;
+    margin-bottom: 3%;
+    overflow-y: auto;
+    /* 若內容超出則顯示滾動條 */
+    max-height: 400px;
+}
+
+.bp-left::-webkit-scrollbar {
+    width: 6px;
+}
+
+.bp-left::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.823);
+    border-radius: 10px;
+}
+
+.bp-left::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+    margin: 40px;
+}
+
+.bp-img-center div {
+    display: flex;
+    justify-content: center;
+    /* 讓 3 張圖片平均對齊 */
+}
+
+.bp-p-btn-group {
+    display: flex;
+    /* 讓 p 和 button 並排 */
+    align-items: center;
+    /* 讓文字與按鈕垂直對齊 */
+    justify-content: flex-start;
+    /* 從左開始 */
+    gap: 9px;
+    padding: 0;
+}
+/*新註冊 遊戲類型 量表*/
+.gt-container{
+    display: flex; 
+    flex-direction: column; 
+    align-items: center;
+    background-color: #EDE9BA;
+    font-family: 'Noto Serif TC', serif;
+    width: auto;
+    height: auto;
+    padding:0 21px 17px 21px;
+    border-radius: 10px;
+}
+.game-type-content{
+    font-size: 15px;  
+    width: 100%;
+    margin-bottom: 14px;
+}
+.gt-input{
+    display: flex; 
+    flex-direction: column; 
+    gap: 9px;
+    margin-top: 15px;
+}
+.gq{
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 10px;
+}
